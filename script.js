@@ -6,12 +6,18 @@ const percentage = [
     { "id": 4, "name": "30%", "value": 30 },
     { "id": 5, "name": "35%", "value": 35 },
     { "id": 6, "name": "40%", "value": 40 },
-    { "id": 7, "name": "45%", "value": 45 },
-    { "id": 8, "name": "50%", "value": 50 },
-    { "id": 9, "name": "60%", "value": 60 },
-    { "id": 10, "name": "70%", "value": 70 },
-    { "id": 11, "name": "80%", "value": 80 },
+    { "id": 7, "name": "50%", "value": 50 },
+    { "id": 8, "name": "60%", "value": 60 },
+    { "id": 9, "name": "70%", "value": 70 },
+    { "id": 10, "name": "80%", "value": 80 },
+    { "id": 11, "name": "More", "value": 100 },
 ];
+const full_price = document.getElementById('full_price');
+const discount_input = document.getElementById('discount_input');
+const latest_price = document.getElementById('last_price');
+const discount_price = document.getElementById('discount_price');
+
+
 
 function discountList(percentage) {
     const dataList = document.getElementsByClassName('discount-block')[0];
@@ -33,20 +39,43 @@ function discountList(percentage) {
     });
 }
 
+function manualCalculate(){
+    document.getElementById('calculateBtn').addEventListener('click', function(event){
+        event.preventDefault()
+        const percent_calculate1 = (parseFloat(full_price.value) * discount_input.value)/100;
+        const last_price1 = parseFloat(full_price.value) - percent_calculate1;
+
+        latest_price.value = last_price1.toFixed(2)
+        discount_price.value = '-' + percent_calculate1.toFixed(2)
+    });
+}
+
 function calculation(){
-    const full_price = document.getElementById('full_price');
     const allBtn = document.querySelectorAll('.block');
-    const discount_price = document.getElementById('discount_price');
+    const discount_form = document.getElementById('discount_form');
+    var i = 1;
+
+
     allBtn.forEach((button, index) => {
 
         button.addEventListener('click', function() {
             const percent = button.getAttribute('data-value');
             const fullPriceValue = parseFloat(full_price.value)
             const percent_calculate = (fullPriceValue * percent)/100;
-            // const last_price = parseFloat(full_price - percent_calculate);
             const last_price = fullPriceValue - percent_calculate;
-
-            discount_price.value = last_price.toFixed(2);
+            if(percent == 100){
+                if(i == 1){
+                    discount_form.style.display = 'block'
+                    discount_input.focus()
+                    i = 0;
+                }else{
+                    discount_form.style.display = 'none'
+                    i = 1;
+                }
+            }else{
+                discount_price.value = '-' + percent_calculate.toFixed(2);
+                latest_price.value = last_price.toFixed(2);
+            }
         });
     });
     
@@ -54,6 +83,7 @@ function calculation(){
 }
 
 discountList(percentage);
+manualCalculate()
 calculation();
 
 

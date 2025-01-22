@@ -3,14 +3,31 @@
     margin: 0;
     box-sizing: border-box;
 }
+body{
+    background-color: rgb(10, 10, 10);
+}
 form{
     padding:40px 10px;
 }
 label{
     font-weight: bold;
+    color: rgb(255, 255, 255);
 }
 .form-group{
     margin-bottom: 10px;
+}
+#discount_form{
+    display: none;
+}
+.discount{
+    display: flex;
+    justify-content: space-between;
+}
+#discount_input{
+    width: 70%;
+}
+#calculateBtn{
+    width: 28%;
 }
 .discount-block{
     width: 100%;
@@ -39,6 +56,12 @@ p{
     font-weight: bold;
 }
 #discount_price{
+    background-color: rgb(255, 111, 111); 
+    color: white; 
+    font-weight: bold; 
+    font-size: 20px;
+}
+#last_price{
     background-color: rgb(75, 202, 75); 
     color: white; 
     font-weight: bold; 
