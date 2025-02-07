@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <nav class="navbar sticky-top navbar-dark bg-dark">
+        <div class="form-inline">
+          <a class="btn btn-sm btn-outline-light" href="index.html">Calculator</a>
+          <a class="btn btn-sm btn-outline-light" href="history.html">History</a>
+        </div>
+    </nav>
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail1">$ Full Price</label>
+            <div class="full_price">
+                <input type="number" class="form-control" id="full_price" min="0" max="9999">
+                <button type="submit" class="btn btn-warning" id="saveBtn">Save</button>
+            </div>
+            <input type="text" id="draft" value="">
+
+        </div>
+        <div class="form-group" id="discount_form">
+            <label for="exampleInputEmail1">% Discount</label>
+            <div class="discount">
+                <input type="number" class="form-control" id="discount_input" pattern="[0-9]*" inputmode="numeric" min="0" max="9999" value="">
+                <button type="submit" class="btn btn-warning" id="calculateBtn">Calculate</button>
+            </div>
+          </div>
+        <div class="discount-block">
+            <!-- <div class="block">
+                <p>10%</p>
+            </div> -->
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">$ Discount Price</label>
+            <input type="number" class="form-control" id="discount_price" value="0.00" disabled>
+        </div> 
+        <div class="form-group">
+          <label for="exampleInputPassword1">$ Last Price</label>
+          <input type="number" class="form-control" id="last_price" value="0.00" disabled>
+        </div>    
+    </form>
+    <script src="bootstrap.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
