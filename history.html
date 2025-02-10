@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar sticky-top navbar-dark bg-dark">
+        <div class="form-inline">
+          <a class="btn btn-sm btn-outline-light" href="index.html">Calculator</a>
+          <a class="btn btn-sm btn-outline-light" href="history.html">History</a>
+          <button type="submit" class="btn btn-sm btn-danger" id="remove">Remove</button>
+
+        </div>
+    </nav>
+    <table class="table table-striped table-dark" id="dataTable" style="margin-bottom: 0px;">
+        <thead>
+          <tr>
+            <th scope="col">Price</th>
+            <th scope="col">%</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Latest Price</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          
+        </tbody>
+      </table>
+      <div class="total">
+        <table class="table table-striped table-dark" id="dataTable" style="margin-bottom: 0px;">
+            <tbody>
+              <tr>
+                  <th></th>
+                  <td></td>
+                  <th>_Total:</th>
+                  <th scope="col" id="totalPrice">0</th>
+                  <td></td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    <script src="bootstrap.min.js"></script>
+</body>
+</html>
+<script>
+    const dataTableBody = document.getElementById('dataTable').querySelector('tbody');
+    const data = localStorage.getItem('userData');
+    const parsedData = data ? JSON.parse(data) : []; // Parse it to an array
+    let totalPrice= 0; 
+
+    function list_data(){
+      parsedData.forEach((item, index)=> {
+          const row = document.createElement('tr');
+          const price = document.createElement('td');
+          const percent = document.createElement('td');
+          const discount = document.createElement('td');
+          const latest = document.createElement('td');
+          const removetd = document.createElement('td');
+          const btn = document.createElement('button')
+
+          totalPrice += Number(item.latest_price);
+
+          price.textContent = '$'+item.full_price;
+          percent.textContent =  item.discount+'%';
+          discount.textContent = '-$' +Math.abs(item.discount_price)
+          discount.className = 'text-danger'
+          latest.textContent = '$'+item.latest_price;
+          btn.textContent = 'X'
+
+          removetd.appendChild(btn)
+          btn.className = 'btn btn-sm btn-danger xBtn';
+          //btn.id = 'xBtn';
+
+          row.appendChild(price);
+          row.appendChild(percent);
+          row.appendChild(discount);
+          row.appendChild(latest);
+          row.appendChild(removetd)
+          row.setAttribute('data-value', index)
+
+          dataTableBody.appendChild(row);
+          //document.getElementById('totalPrice').textContent = '$ '+latestPrice.toFixed(2)
+      })
+      document.getElementById('totalPrice').textContent = '$'+totalPrice.toFixed(2);
+    }
+    
+    list_data();
+    //remove local storage
+    document.getElementById('remove').addEventListener('click', function(){
+        localStorage.removeItem('userData');
+        dataTableBody.innerHTML = '';
+        document.getElementById('totalPrice').textContent = '$ 0';
+    });
+    
+    //const xBtn = document.querySelectorAll('.xBtn');
+
+    document.querySelectorAll('.xBtn').forEach(btn =>{
+      const tr_btn= btn.parentNode.parentNode;
+      const btn_el = btn.parentNode.parentNode.getAttribute('data-value')
+
+      btn.addEventListener('click', function(){
+        console.log(btn_el)
+        //remove index
+        parsedData.splice(btn_el, 1);
+        //tr_btn.remove();
+        //update to local storage
+        localStorage.setItem('userData', JSON.stringify(parsedData));
+        location.reload();
+
+        // dataTableBody.innerHTML = '';
+        // list_data();
+      });
+    });
+    
+</script>
